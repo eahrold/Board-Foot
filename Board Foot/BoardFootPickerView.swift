@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BoardPickerView: UIPickerView, UIPickerViewDataSource, UIPickerViewDelegate {
+class BoardFootThicknessPickerView: UIPickerView, UIPickerViewDataSource, UIPickerViewDelegate {
     /*
     // Only override drawRect: if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
@@ -55,5 +55,39 @@ class BoardPickerView: UIPickerView, UIPickerViewDataSource, UIPickerViewDelegat
 
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         thicknessChangeHandle!()
+    }
+}
+
+
+class BoardFootBackendPickerView: UIPickerView, UIPickerViewDataSource, UIPickerViewDelegate {
+    /*
+    // Only override drawRect: if you perform custom drawing.
+    // An empty implementation adversely affects performance during animation.
+    override func drawRect(rect: CGRect) {
+    // Drawing code
+    }
+    */
+    private let backends = ["Default", "Dropbox", "iCloud"]
+
+    required init(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        self.dataSource = self
+        self.delegate = self
+    }
+
+    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+        return 1
+    }
+
+    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return backends.count
+    }
+
+    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String! {
+        return backends[row]
+    }
+
+    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+
     }
 }

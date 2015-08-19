@@ -13,6 +13,8 @@ class BoardMeasurementViewController: UIViewController, UITableViewDelegate, UIT
     var job :Job?
 
     //MARK: Properties
+    @IBOutlet weak var jobName: UITextField!
+
     @IBOutlet weak var length_textField: UITextField!
     @IBOutlet weak var length_unitControl: UISegmentedControl!
 
@@ -31,6 +33,7 @@ class BoardMeasurementViewController: UIViewController, UITableViewDelegate, UIT
 
     @IBOutlet weak var tableView: UITableView!
 
+
     //MARK: Overrides
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,7 +44,8 @@ class BoardMeasurementViewController: UIViewController, UITableViewDelegate, UIT
 
         width_textField.delegate = self
         length_textField.delegate = self
-
+        jobName.delegate = self
+        
         // Length
         length_textField.text = "8";
         length_textField.addTarget(self, action: "recalculate:", forControlEvents: .EditingChanged)
@@ -62,11 +66,24 @@ class BoardMeasurementViewController: UIViewController, UITableViewDelegate, UIT
             thicknessSlider.value = sliderValue.floatValue
         }
 
+        self.jobName.addTarget(self, action: "modifyName:", forControlEvents: .EditingChanged)
+        
         if let job = self.job {
-            self.measurementNavTitle.title = "Measurements for " + job.name
+            self.jobName.text = job.name
+        } else {
+            self.job = Job()
         }
 
+
         reloadAndAdjustTotal()
+    }
+
+    @IBAction func unwindJobControllerWithSegue(sender: UIButton) {
+        self.performSegueWithIdentifier("EditJobUnwind", sender: self)
+    }
+
+    override func viewWillDisappear(animated: Bool) {
+        self.job?.name = self.jobName.text
     }
 
     override func didReceiveMemoryWarning() {
@@ -81,6 +98,10 @@ class BoardMeasurementViewController: UIViewController, UITableViewDelegate, UIT
     }
 
     //MARK: IBActions
+    @IBAction func modifyName(sender: UITextField) {
+        self.job?.name = sender.text
+    }
+
     @IBAction func changeUnit(sender: UISegmentedControl) {
         if(sender.isEqual(length_unitControl)){
             convertUnitForTextField(sender.selectedSegmentIndex, sender: length_textField)
@@ -105,7 +126,6 @@ class BoardMeasurementViewController: UIViewController, UITableViewDelegate, UIT
         }
     }
 
-
     @IBAction func addUnitToTable(sender: UIButton) {
 
         let length = (length_textField.text as NSString).doubleValue
@@ -124,12 +144,6 @@ class BoardMeasurementViewController: UIViewController, UITableViewDelegate, UIT
         job?.lumber.append(piece)
         
         reloadAndAdjustTotal()
-    }
-
-
-    func loadJob(job: Job){
-        self.job = job
-        self.tableView.reloadData()
     }
 
     func removeUnitAtIndex(idx : Int){

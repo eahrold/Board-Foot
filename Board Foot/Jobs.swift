@@ -12,10 +12,24 @@ import CloudKit
 class Job: NSObject, NSSecureCoding {
 
     // MARK: Properties
-    var lumber = [Lumber]()
+
+    /// Name of the Job
     var name: String
+
+    /// Array of lumber objects
+    var lumber = [Lumber]()
+
+    /// Date the object was created on
     var creationDate: NSDate
-    var uuid: CKRecordID
+
+    /// Last modified date
+    var lastModifiedDate: NSDate?
+
+    /// UUID for the object
+    var uuid: String
+
+    /// is the job completed?
+    var completed: Bool = false
 
     private let formatter = NSDateFormatter()
 
@@ -25,7 +39,7 @@ class Job: NSObject, NSSecureCoding {
     }
 
     var jobDescription: String {
-        return "Job: \(name) Total: \(self.total)"
+        return "\(name) Total: \(self.total)"
     }
 
     // MARK: initializers
@@ -35,7 +49,8 @@ class Job: NSObject, NSSecureCoding {
         self.formatter.dateStyle = NSDateFormatterStyle.LongStyle
         self.formatter.timeStyle = .MediumStyle
         self.creationDate = NSDate()
-        self.uuid = CKRecordID(recordName: "\(self.creationDate)")
+        self.lastModifiedDate = NSDate()
+        self.uuid = NSUUID().UUIDString as String
     }
 
     convenience init(name : String){
@@ -83,7 +98,11 @@ class Job: NSObject, NSSecureCoding {
             self.creationDate = creationDate
         }
 
-        if let uuid = coder.decodeObjectOfClass(CKRecordID.self, forKey:"uuid") as? CKRecordID {
+        if let lastModifiedDate = coder.decodeObjectOfClass(NSDate.self, forKey:"lastModifiedDate") as? NSDate {
+            self.lastModifiedDate = lastModifiedDate
+        }
+
+        if let uuid = coder.decodeObjectOfClass(CKRecordID.self, forKey:"uuid") as? String {
             self.uuid = uuid
         }
 
@@ -91,13 +110,19 @@ class Job: NSObject, NSSecureCoding {
         if let lumber = coder.decodeObjectOfClasses(set, forKey:"lumber") as? [Lumber] {
             self.lumber = lumber
         }
+
+        self.completed = coder.decodeBoolForKey("completed")
     }
 
     func encodeWithCoder(encoder: NSCoder) {
         encoder.encodeObject(self.name, forKey: "name")
         encoder.encodeObject(self.creationDate, forKey: "creationDate")
+        encoder.encodeObject(self.lastModifiedDate, forKey: "lastModifiedDate")
+
         encoder.encodeObject(self.uuid, forKey: "uuid")
         encoder.encodeObject(self.lumber, forKey: "lumber")
+
+        encoder.encodeBool(self.completed, forKey: "completed")
     }
 
     static func supportsSecureCoding() -> Bool {

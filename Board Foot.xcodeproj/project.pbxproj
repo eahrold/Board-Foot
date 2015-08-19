@@ -15,8 +15,8 @@
 		BE83C8E91B82657200AF406A /* Species.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE83C8E71B82570500AF406A /* Species.swift */; };
 		BEC7787A1B4D814500D1819D /* Jobs.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEC778791B4D814500D1819D /* Jobs.swift */; };
 		BEC7787B1B4D814500D1819D /* Jobs.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEC778791B4D814500D1819D /* Jobs.swift */; };
-		BEC7787D1B4DB0B800D1819D /* BoardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEC7787C1B4DB0B700D1819D /* BoardTableViewCell.swift */; };
-		BEC7787E1B4DB0B800D1819D /* BoardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEC7787C1B4DB0B700D1819D /* BoardTableViewCell.swift */; };
+		BEC7787D1B4DB0B800D1819D /* BoardFootTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEC7787C1B4DB0B700D1819D /* BoardFootTableViewCell.swift */; };
+		BEC7787E1B4DB0B800D1819D /* BoardFootTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEC7787C1B4DB0B700D1819D /* BoardFootTableViewCell.swift */; };
 		BEE09CCB1B7E59BC0020AB81 /* Measurements.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE09CCA1B7E59BC0020AB81 /* Measurements.swift */; };
 		BEE09CCC1B7E5E5E0020AB81 /* Measurements.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE09CCA1B7E59BC0020AB81 /* Measurements.swift */; };
 		BEE09CCE1B7E5EA90020AB81 /* Lumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE09CCD1B7E5EA90020AB81 /* Lumber.swift */; };
@@ -29,7 +29,7 @@
 		BEE3D0791B4ADF3B009CEAB7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BEE3D0781B4ADF3B009CEAB7 /* Images.xcassets */; };
 		BEE3D07C1B4ADF3B009CEAB7 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = BEE3D07A1B4ADF3B009CEAB7 /* LaunchScreen.xib */; };
 		BEE3D0881B4ADF3B009CEAB7 /* Board_FootTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE3D0871B4ADF3B009CEAB7 /* Board_FootTests.swift */; };
-		BEE3D0961B4AE3A9009CEAB7 /* BoardPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE3D0951B4AE3A9009CEAB7 /* BoardPickerView.swift */; };
+		BEE3D0961B4AE3A9009CEAB7 /* BoardFootPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEE3D0951B4AE3A9009CEAB7 /* BoardFootPickerView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,7 +49,7 @@
 		BE83C8E41B812AD600AF406A /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		BE83C8E71B82570500AF406A /* Species.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Species.swift; sourceTree = "<group>"; };
 		BEC778791B4D814500D1819D /* Jobs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Jobs.swift; sourceTree = "<group>"; };
-		BEC7787C1B4DB0B700D1819D /* BoardTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardTableViewCell.swift; sourceTree = "<group>"; };
+		BEC7787C1B4DB0B700D1819D /* BoardFootTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardFootTableViewCell.swift; sourceTree = "<group>"; };
 		BEE09CCA1B7E59BC0020AB81 /* Measurements.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Measurements.swift; sourceTree = "<group>"; };
 		BEE09CCD1B7E5EA90020AB81 /* Lumber.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lumber.swift; sourceTree = "<group>"; };
 		BEE09CD01B7E83BD0020AB81 /* Backends.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Backends.swift; sourceTree = "<group>"; };
@@ -63,7 +63,7 @@
 		BEE3D0811B4ADF3B009CEAB7 /* Board FootTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Board FootTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BEE3D0861B4ADF3B009CEAB7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BEE3D0871B4ADF3B009CEAB7 /* Board_FootTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Board_FootTests.swift; sourceTree = "<group>"; };
-		BEE3D0951B4AE3A9009CEAB7 /* BoardPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardPickerView.swift; sourceTree = "<group>"; };
+		BEE3D0951B4AE3A9009CEAB7 /* BoardFootPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardFootPickerView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,8 +96,8 @@
 		BEE09CC71B7E594D0020AB81 /* UISubclasses */ = {
 			isa = PBXGroup;
 			children = (
-				BEE3D0951B4AE3A9009CEAB7 /* BoardPickerView.swift */,
-				BEC7787C1B4DB0B700D1819D /* BoardTableViewCell.swift */,
+				BEE3D0951B4AE3A9009CEAB7 /* BoardFootPickerView.swift */,
+				BEC7787C1B4DB0B700D1819D /* BoardFootTableViewCell.swift */,
 			);
 			name = UISubclasses;
 			sourceTree = "<group>";
@@ -151,9 +151,7 @@
 				BEE09CC81B7E59680020AB81 /* View Controllers */,
 				BEE09CC71B7E594D0020AB81 /* UISubclasses */,
 				BE83C8EB1B8270D800AF406A /* Utility */,
-				BEE3D0781B4ADF3B009CEAB7 /* Images.xcassets */,
 				BEE3D0751B4ADF3B009CEAB7 /* Main.storyboard */,
-				BEE3D07A1B4ADF3B009CEAB7 /* LaunchScreen.xib */,
 				BEE3D06F1B4ADF3B009CEAB7 /* Supporting Files */,
 			);
 			path = "Board Foot";
@@ -162,6 +160,8 @@
 		BEE3D06F1B4ADF3B009CEAB7 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				BEE3D0781B4ADF3B009CEAB7 /* Images.xcassets */,
+				BEE3D07A1B4ADF3B009CEAB7 /* LaunchScreen.xib */,
 				BEE3D0701B4ADF3B009CEAB7 /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -298,9 +298,9 @@
 				BEE09CCE1B7E5EA90020AB81 /* Lumber.swift in Sources */,
 				BE83C8E51B812AD600AF406A /* Logger.swift in Sources */,
 				BEE09CD11B7E83BD0020AB81 /* Backends.swift in Sources */,
-				BEE3D0961B4AE3A9009CEAB7 /* BoardPickerView.swift in Sources */,
+				BEE3D0961B4AE3A9009CEAB7 /* BoardFootPickerView.swift in Sources */,
 				BE83C8E81B82570500AF406A /* Species.swift in Sources */,
-				BEC7787D1B4DB0B800D1819D /* BoardTableViewCell.swift in Sources */,
+				BEC7787D1B4DB0B800D1819D /* BoardFootTableViewCell.swift in Sources */,
 				BEE3D0721B4ADF3B009CEAB7 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -309,7 +309,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BEC7787E1B4DB0B800D1819D /* BoardTableViewCell.swift in Sources */,
+				BEC7787E1B4DB0B800D1819D /* BoardFootTableViewCell.swift in Sources */,
 				BEE3D0881B4ADF3B009CEAB7 /* Board_FootTests.swift in Sources */,
 				BEE09CD21B7E83BD0020AB81 /* Backends.swift in Sources */,
 				BEE09CCC1B7E5E5E0020AB81 /* Measurements.swift in Sources */,

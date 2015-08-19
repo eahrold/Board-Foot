@@ -24,3 +24,20 @@ class BoardTableViewCell: UITableViewCell {
     }
 
 }
+
+class BoardFootJobTableViewCell: UITableViewCell {
+
+    @IBOutlet weak var totalButton: UIButton!
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        // Initialization code
+    }
+
+    override func setSelected(selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+
+        // Configure the view for the selected state
+    }
+    
+}

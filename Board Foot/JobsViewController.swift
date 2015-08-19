@@ -7,11 +7,17 @@
 //
 
 import UIKit
-import CloudKit
 
 class JobsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
-    var jobs = [Job]()
+    var allJobs = [Job]()
+    var jobs: [Job] {
+        let filteredArray = allJobs.filter() {
+            return ($0.completed == false)
+        }
+        return filteredArray
+    }
+
     var tableView : UITableView?
 
     override func viewDidLoad() {
@@ -20,7 +26,7 @@ class JobsViewController: UIViewController, UITableViewDataSource, UITableViewDe
         Job.getJobs { (arr) -> Void in
             NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
                 if let jar = arr as? [Job] {
-                    self.jobs = jar
+                    self.allJobs = jar
                 }
                 self.tableView?.reloadData()
             })
@@ -36,13 +42,17 @@ class JobsViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
 
     // MARK: Segues
-    @IBAction func unwindMeasurementController(unwindSegue: UIStoryboardSegue){
+    @IBAction func saveJob(unwindSegue: UIStoryboardSegue){
         if let source = unwindSegue.sourceViewController as? BoardMeasurementViewController,
             job = source.job
         {
-                job.save()
-                // TODO: Reload just the single row.
-                self.tableView?.reloadData()
+            job.save()
+            if contains(self.allJobs, job) == false {
+                self.allJobs.append(job)
+            }
+            
+            // TODO: Reload just the single row.
+            self.tableView?.reloadData()
         }
     }
 
@@ -60,7 +70,7 @@ class JobsViewController: UIViewController, UITableViewDataSource, UITableViewDe
 
         self.promptForName(job, completion: { () -> Void in
             if count(job.name) > 0 {
-                self.jobs.append(job)
+                self.allJobs.append(job)
                 self.tableView?.reloadData()
             }
         })
@@ -99,16 +109,10 @@ class JobsViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return jobs.count
+       return self.jobs.count
     }
 
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-    }
-
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("jobCell", forIndexPath: indexPath) as! UITableViewCell
-        cell.textLabel?.text = jobs[indexPath.row].jobDescription
-        return cell
     }
 
     func tableView(tableView: UITableView, accessoryButtonTappedForRowWithIndexPath indexPath: NSIndexPath) {
@@ -119,54 +123,30 @@ class JobsViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
 
     func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [AnyObject]? {
-
         var deleteAction = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: "Delete" , handler: { (action:UITableViewRowAction!, indexPath:NSIndexPath!) -> Void in
             if self.jobs.count > indexPath.row {
                 let job = self.jobs[indexPath.row]
                 job.remove()
-
-                self.jobs.removeAtIndex(indexPath.row)
+                if let idx = find(self.allJobs, job){
+                    self.allJobs.removeAtIndex(idx)
+                }
                 tableView.reloadData()
             }
         })
-
-        var modifyAction = UITableViewRowAction(style: UITableViewRowActionStyle.Normal, title: "Change Name" , handler: { (action:UITableViewRowAction!, indexPath:NSIndexPath!) -> Void in
-                let job = self.jobs[indexPath.row]
-               self.promptForName(job, completion: { () -> Void in
-                    job.save()
-                    self.tableView?.reloadData()
-               });
-        })
-
-        modifyAction.backgroundColor = UIColor.blueColor()
-        return [deleteAction, modifyAction]
+        return [deleteAction]
     }
 
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        println("did drag...")
-    };
-
-    
-    var startLocation: CGPoint?
-    func swipeLeft(sender: UIGestureRecognizer) {
-        let threshold: CGFloat = 100
-
-        if (sender.state == .Began){
-            startLocation = sender.locationInView(self.view)
-        } else if (sender.state == .Ended) {
-            if let start = self.startLocation {
-                let stopLocation = sender.locationInView(self.view)
-                let dx = stopLocation.x - start.x
-                let dy = stopLocation.y - start.y
-                let distance = sqrt(dx*dx + dy*dy );
-
-                if (distance > threshold )
-                {
-                    println("DELETE_ROW");
-                }
-            }
-        }
     }
 
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("jobCell", forIndexPath: indexPath) as! BoardFootJobTableViewCell
+        let job = jobs[indexPath.row]
+
+        cell.textLabel?.text = job.name
+        cell.totalButton.setTitle("Total: \(job.total)", forState: .Normal)
+
+        return cell
+    }
 }
 

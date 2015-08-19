@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreData
+import CloudKit
 
 /**
 *  Back end Protocol that all backends should conform to.
@@ -17,6 +18,7 @@ protocol Backend {
     Get an array of jobs out of the backend
 
     :returns: Array of Jobs
+    
     */
     func load() -> [Job]
 
@@ -24,6 +26,8 @@ protocol Backend {
     Save or Update a Job
 
     :param: job Job object to be saved or updated
+    
+    :returns: true on success, otherwise false
     */
     func save(job: Job) -> Bool
 
@@ -31,16 +35,28 @@ protocol Backend {
     Delete a Job from persistance storage
 
     :param: job Job object to remove
+    
+    :returns: true on success, otherwise false
     */
     func remove(job: Job) -> Bool
+
+    /**
+    Remove all of the jobs from the backend storage
+
+    :returns: true on success, otherwise false
+    */
+    func removeAll() -> Bool
+
 }
 
 
-/// NSUserDefaults Backend
+/// NSUserDefaults Backend for Board Foot
 class Defaults:  NSObject, Backend {
 
+    let jobsKey = "Jobs"
+
     private var jobsData: [NSData]? {
-        let dataArray = NSUserDefaults.standardUserDefaults().objectForKey("Jobs") as? [NSData]
+        let dataArray = NSUserDefaults.standardUserDefaults().objectForKey(jobsKey) as? [NSData]
         return dataArray
     }
 
@@ -94,27 +110,32 @@ class Defaults:  NSObject, Backend {
             jobs.append(job)
         }
 
-        NSUserDefaults.standardUserDefaults().setObject(self.archiveJobArray(jobs), forKey: "Jobs")
+        NSUserDefaults.standardUserDefaults().setObject(self.archiveJobArray(jobs), forKey: jobsKey)
         return true
     }
 
     func remove(job: Job) -> Bool {
         var jobs = self.jobsArray
         for (idx, j) in enumerate(jobs) {
-            let r1 = j.uuid.recordName
-            let r2 = job.uuid.recordName
+            let r1 = j.uuid
+            let r2 = job.uuid
 
             if r1 == r2 {
                 jobs.removeAtIndex(idx)
                 break
             }
         }
-        NSUserDefaults.standardUserDefaults().setObject(self.archiveJobArray(jobs), forKey: "Jobs")
+        NSUserDefaults.standardUserDefaults().setObject(self.archiveJobArray(jobs), forKey: jobsKey)
+        return true
+    }
+
+    func removeAll() -> Bool {
+        NSUserDefaults.standardUserDefaults().removeObjectForKey(jobsKey)
         return true
     }
 }
 
-/// CoreData Backend
+/// CoreData Backend for Board Foot
 class CoreData:  NSManagedObject, Backend {
     // MARK: -- Core Data Backend Protocol --
     func load() -> [Job] {
@@ -128,9 +149,13 @@ class CoreData:  NSManagedObject, Backend {
     func remove(job: Job) -> Bool {
         return true
     }
+
+    func removeAll() -> Bool {
+        return true
+    }
 }
 
-/// DropBox backend
+/// DropBox backend for Board Foot
 class DropBox: NSObject, Backend {
     // MARK: -- DropBox Backend Protocol --
 
@@ -145,9 +170,13 @@ class DropBox: NSObject, Backend {
     func remove(job: Job) -> Bool {
         return true
     }
+
+    func removeAll() -> Bool {
+        return true
+    }
 }
 
-/// CloudKit backend
+/// CloudKit backend for Board Foot
 class CloudKit:  NSObject, Backend {
     // MARK: -- CloudKit Backend Protocol --
     func load() -> [Job] {
@@ -159,6 +188,10 @@ class CloudKit:  NSObject, Backend {
     }
 
     func remove(job: Job) -> Bool {
+        return true
+    }
+
+    func removeAll() -> Bool {
         return true
     }
 }
